@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Food Blog</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <aside id="leftside"></aside>
+    <aside id="rightside"></aside>
+
+    <div id="app">
+        <div id="container">
+
+            <header class="d-flex justify-content-between align-items-center">
+                <span>{{ blog.title }}</span>
+
+                <!-- Vue Local Navigation Component -->
+                <site-nav></site-nav>
+            </header>
+
+            <main>
+                <aside id="photos">
+                    <!-- White chicken chili image -->
+                    <img :src="blog.image.src" :alt="blog.image.alt" width="180">
+                </aside>
+
+                <h2>{{ blog.sectionTitle }}</h2>
+
+                <section id="blogposts">
+                    <div class="post" v-for="(post, index) in blog.posts" :key="index">
+
+                        <!-- Profile Image -->
+                        <img class="profile-pic" :src="blog.profileImage" alt="Profile"
+                            @click="toggleProfile(post.author)">
+
+                        <span class="author">{{ post.author }}</span> —
+                        <span class="date">{{ post.date }}</span>
+                        <span class="reply">REPLY</span>
+
+                        <p>{{ post.content }}</p>
+                    </div>
+                </section>
+            </main>
+
+            <footer>
+                &copy; {{ blog.footer }}
+            </footer>
+
+            <!-- Floating Profile Box -->
+            <div class="profile-modal" v-if="blog.activeProfile">
+                <button class="close-btn" @click="toggleProfile(null)">✕</button>
+                <h3>{{ blog.activeProfile }}</h3>
+                <p><strong>Foodie Level:</strong> {{ blog.authors[blog.activeProfile].level }}</p>
+                <p>{{ blog.authors[blog.activeProfile].bio }}</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Vue Script -->
+    <script src="app.js"></script>
+</body>
+
+</html>
